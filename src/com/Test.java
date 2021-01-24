@@ -1,6 +1,8 @@
 package com;
 
+import dao.UserImpl;
 import mysql.DatabaseImpl;
+import mysql.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,7 +56,8 @@ public class Test {
         dh(money, shop, shopjb5);
     }
 
-    public void test() {
+    public void test(String name,String password,int moneys) {
+        money[0] += moneys;
         Frame frame = new Frame("BombGame - 数字炸弹游戏");
         JFrame jf1 = new JFrame("游戏程序");
         JFrame shop = new JFrame("游戏商店");
@@ -97,9 +100,12 @@ public class Test {
         jb2.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb3.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb4.setFont(new Font("微软雅黑", Font.BOLD, 12));
+
+        System.out.println(name+password+moneys);
+
 /*        jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));*/
         //创建文本框
-        JTextArea jtf = new JTextArea("\n请先进行 '登录' 在开始游戏，游戏规则介绍:\n" +
+        JTextArea jtf = new JTextArea("\n欢迎您 <"+name+"> 游戏规则介绍:\n" +
                 "猜数字，数字会不断缩小，直到你猜到正确的数字\n" +
                 "倘若你猜错次数达到5次以上，你获得金币的收益会减半\n" +
                 "如果你猜对，你将会获得金币奖励\n" +
@@ -119,11 +125,19 @@ public class Test {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                int option = JOptionPane.showConfirmDialog(frame, "是否退出本软件?\n退出软件会导致金币以及数据重置，请慎重决定");
+                int option = JOptionPane.showConfirmDialog(frame, "是否退出本软件?\n退出软件需要输入正确密码，否住有惩罚");
                 if (JOptionPane.OK_OPTION == option) {
                     String answer = JOptionPane.showInputDialog(frame, "退出本软件请输入 '正确密码'\n密码可以在商店花费金币购买获得");
                     if ("safqhbfjt325472342342".equals(answer) || "setusb".equals(answer)) {
                         JOptionPane.showMessageDialog(frame, "正在退出软件惩罚触发程序\n点击确认即可安全退出");
+                        UserImpl user = new UserImpl();
+                        /*System.out.println("返回值: "+user.moneyModify(name, password, money[0]));*/
+                        if (user.moneyModify(name, password, money[0]) > 0) {
+                            System.out.println("已提交信息！");
+                        } else {
+                            System.out.println("提交信息失败，重新提交！");
+                            JOptionPane.showMessageDialog(frame,"金钱提交服务器失败，请截此窗口联系开发者!\n用户: "+name+"\t金钱: "+money[0] );
+                        }
                         System.exit(0);
                     } else if ("".equals(answer)) {
                         if (math < 3) {
@@ -353,7 +367,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v21123-1 正式运行版" +
+                        "\n软件当前版本: v21124 正式运行版" +
                         "\n官方网站: db.mact.top");
             }
         });

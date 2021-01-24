@@ -2,6 +2,7 @@ package net;
 
 import com.Test;
 import dao.UserImpl;
+import mysql.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,7 +48,7 @@ public class Login extends JDialog {
             if (user.login(text.getText(), password.getText())) {
                 dispose();
                 Test test = new Test();
-                test.test();
+                test.test(text.getText(), password.getText(),user.money(text.getText(), password.getText()));
             } else {
                 text.setText("账号错误");
                 text.requestFocus();
