@@ -1,7 +1,5 @@
 package mysql;
 
-import java.util.Date;
-
 /**
  * @author setusb
  * @version 1.0

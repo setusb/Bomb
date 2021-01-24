@@ -1,7 +1,6 @@
 package com;
 
 import mysql.DatabaseImpl;
-import net.Login;
 
 import javax.swing.*;
 import java.awt.*;
@@ -267,12 +266,7 @@ public class Test {
                         }
                     };*/
                     /*shoptime.schedule(task, 1000, 1000);*/
-                    service.scheduleAtFixedRate(new Runnable() {
-                        @Override
-                        public void run() {
-                            shopjt1.setText("\n\n\t            你当前的金币是: " + money[0]);
-                        }
-                    }, 1, 1, TimeUnit.SECONDS);
+                    service.scheduleAtFixedRate(() -> shopjt1.setText("\n\n\t            你当前的金币是: " + money[0]), 1, 1, TimeUnit.SECONDS);
                     /*
                      * 兑换按钮:
                      * 优化循环算法，大幅度节省代码量
@@ -310,11 +304,10 @@ public class Test {
                     if (money[0] >= 500) {
                         money[0] -= 500;
                         JOptionPane.showMessageDialog(shop, "safqhbfjt325472342342");
-                        System.out.println(money[0]);
                     } else {
                         JOptionPane.showMessageDialog(shop, "你没有足够的金币来兑换");
-                        System.out.println(money[0]);
                     }
+                    /*System.out.println(money[0]);*/
                 } else {
                     JOptionPane.showMessageDialog(shop, "你取消了兑换");
                 }

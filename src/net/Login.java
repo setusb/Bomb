@@ -1,17 +1,10 @@
 package net;
 
 import com.Test;
-import com.updateDetection;
 import dao.UserImpl;
-import mysql.DatabaseImpl;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  * @author setusb
@@ -47,41 +40,29 @@ public class Login extends JDialog {
 /*        con.add(area);*/
 
         password.setEchoChar('*');
-        jButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        jButton.addActionListener(actionEvent -> {
 
-                System.out.println(text.getText());
-                UserImpl user = new UserImpl();
-                if (user.login(text.getText(), password.getText())) {
-                    dispose();
-                    Test test = new Test();
-                    test.test();
-                } else {
-                    text.setText("账号错误");
-                    text.requestFocus();
-                    password.setText("");
-                }
-            }
-        });
-        text.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                // TODO Auto-generated method stub
-                text.setText("triggerEvent");
-            }
-        });
-        button.addActionListener(new ActionListener(){
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                text.setText("");
+/*            System.out.println(text.getText());*/
+            UserImpl user = new UserImpl();
+            if (user.login(text.getText(), password.getText())) {
+                dispose();
+                Test test = new Test();
+                test.test();
+            } else {
+                text.setText("账号错误");
                 text.requestFocus();
                 password.setText("");
             }
-
+        });
+        text.addActionListener(arg0 -> {
+            // TODO Auto-generated method stub
+            text.setText("triggerEvent");
+        });
+        button.addActionListener(e -> {
+            // TODO Auto-generated method stub
+            text.setText("");
+            text.requestFocus();
+            password.setText("");
         });
 /*        area.setEditable(false);*/
         this.setVisible(true);

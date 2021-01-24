@@ -1,5 +1,7 @@
 package mysql;
 
+import java.util.Objects;
+
 /**
  * @author setusb
  * @version 1.0
@@ -9,10 +11,10 @@ public class Jm {
     /**
      * 将二进制转换成16进制
      */
-    public static String parseByte2HexStr(byte buf[]) {
-        StringBuffer sb = new StringBuffer();
-        for (int i = 0; i < buf.length; i++) {
-            String hex = Integer.toHexString(buf[i] & 0xFF);
+    public static String parseByte2HexStr(byte[] buf) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : buf) {
+            String hex = Integer.toHexString(b & 0xFF);
             if (hex.length() == 1) {
                 hex = '0' + hex;
             }
@@ -25,8 +27,9 @@ public class Jm {
      * 将16进制转换为二进制
      */
     public static byte[] parseHexStr2Byte(String hexStr) {
-        if (hexStr.length() < 1)
+        if (hexStr.length() < 1) {
             return null;
+        }
         byte[] result = new byte[hexStr.length() / 2];
         for (int i = 0; i < hexStr.length() / 2; i++) {
             int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);
@@ -41,7 +44,7 @@ public class Jm {
      *
      * @param res 需要加密的密文
      * @param key 秘钥
-     * @return
+     * @return 加密后
      */
     public String XORencode(String res, String key) {
         byte[] bs = res.getBytes();
@@ -56,11 +59,11 @@ public class Jm {
      *
      * @param res 需要解密的密文
      * @param key 秘钥
-     * @return
+     * @return 解密后
      */
     public String XORdecode(String res, String key) {
         byte[] bs = parseHexStr2Byte(res);
-        for (int i = 0; i < bs.length; i++) {
+        for (int i = 0; i < Objects.requireNonNull(bs).length; i++) {
             bs[i] = (byte) ((bs[i]) ^ key.hashCode());
         }
         return new String(bs);

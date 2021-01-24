@@ -3,7 +3,6 @@ package com;
 import net.Login;
 
 import javax.swing.*;
-import java.awt.*;
 
 /**
  * @author setusb
