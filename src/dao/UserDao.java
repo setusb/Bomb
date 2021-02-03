@@ -1,5 +1,9 @@
 package dao;
 
+import mysql.User;
+
+import java.util.List;
+
 /**
  * @author setusb
  * @version 1.0
@@ -31,4 +35,19 @@ public interface UserDao {
      * @return 返回是否成功修改
      */
     int moneyModify(String name, String password, int money);
+
+    /**
+     * 注册功能
+     * @param name 用户名
+     * @param password 密码
+     * @return 返回是否注册成功
+     */
+    boolean register(String name, String password);
+
+    /**
+     * 查询单个成员数据
+     * @param name 用户名
+     * @return 返回单个成员数组
+     */
+    List<User> querySingleData(String name);
 }

@@ -2,8 +2,11 @@ package dao;
 
 import mysql.DatabaseDao;
 import mysql.DatabaseImpl;
+import mysql.User;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author setusb
@@ -55,5 +58,43 @@ public class UserImpl extends DatabaseImpl implements UserDao {
             e.printStackTrace();
         }
         return i;
+    }
+
+    @Override
+    public boolean register(String name, String password) {
+        int money = 100;
+        try {
+            linkDatabase();
+            int i = modifyDatabase("insert user(name,password,money) values ('" + name + "','" + password + "','" + money + "')");
+            if (i > 0) {
+                closeDatabase();
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public List<User> querySingleData(String name) {
+        List<User> list = new ArrayList<>();
+        try {
+            linkDatabase();
+            ResultSet rs = inquiryDatabase("select * from user where name = '" + name + "'");
+            while (rs.next()) {
+                User user = new User();
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                user.setMoney(rs.getInt("money"));
+                list.add(user);
+            }
+            closeDatabase();
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

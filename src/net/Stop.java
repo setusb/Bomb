@@ -16,7 +16,7 @@ public class Stop {
         frame.setSize(390, 145);
         frame.setResizable(false);
         frame.setVisible(true);
-        JTextArea jtf = new JTextArea("\n\t          该版本已停用，请前往官网\n         This version has been disabled, please go to the official website\n\t                           进行更新\n\t                             Update", 10, 38);
+        JTextArea jtf = new JTextArea("\n\t          该版本已停用，请前往GitHub\n\t         https://github.com/setusb/Bomb\n\t                           进行更新\n\t                             Update", 10, 38);
         ses(frame, jtf);
     }
 

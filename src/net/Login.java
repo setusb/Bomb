@@ -1,8 +1,8 @@
 package net;
 
 import com.Test;
+import com.Tio;
 import dao.UserImpl;
-import mysql.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,8 @@ public class Login extends JDialog {
         JLabel label2 = new JLabel("密码：");
         JTextField text = new JTextField(15);
 /*        JTextArea area = new JTextArea(10,20);*/
-        JButton button = new JButton("清除");
+        JButton register = new JButton("注册");
+        JButton button = new JButton("试玩");
         JPasswordField password = new JPasswordField(15);
         JButton jButton = new JButton("登录");
 /*        area.setText(areaStr);*/
@@ -38,6 +39,7 @@ public class Login extends JDialog {
         con.add(password);
         con.add(button);
         con.add(jButton);
+        con.add(register);
 /*        con.add(area);*/
 
         password.setEchoChar('*');
@@ -55,15 +57,25 @@ public class Login extends JDialog {
                 password.setText("");
             }
         });
+
+        register.addActionListener(actionEvent -> {
+            dispose();
+            Register reg = new Register();
+            reg.register();
+        });
         text.addActionListener(arg0 -> {
             // TODO Auto-generated method stub
             text.setText("triggerEvent");
         });
         button.addActionListener(e -> {
             // TODO Auto-generated method stub
-            text.setText("");
+/*            text.setText("");
             text.requestFocus();
-            password.setText("");
+            password.setText("");*/
+            dispose();
+            Tio tio = new Tio();
+            tio.test();
+
         });
 /*        area.setEditable(false);*/
         this.setVisible(true);
