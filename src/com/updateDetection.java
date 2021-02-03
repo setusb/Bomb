@@ -14,7 +14,7 @@ import java.sql.SQLException;
 public class updateDetection {
     public void update() {
         //版本号 - 必须和服务器version保持一致
-        String version = "21203";
+        String version = "21204";
         //校验码 - 101是正常 404是停止运营
         String checked = null;
         String deactivate = "404";

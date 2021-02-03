@@ -1,5 +1,7 @@
 package com;
 
+import net.Login;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -47,17 +49,21 @@ public class Tio {
         JButton jb2 = new JButton("商店");
         JButton jb3 = new JButton("特权码");
         JButton jb4 = new JButton("更多");
+        JButton jb5 = new JButton("登录");
         JPanel jp1 = new JPanel();
         JPanel jp2 = new JPanel();
         JPanel jp3 = new JPanel();
         JPanel jp4 = new JPanel();
+        JPanel jp5 = new JPanel();
         /*        JPanel jp5 = new JPanel();*/
+        jp5.add(jb5);
         jp1.add(jb1);
         jp2.add(jb2);
         jp3.add(jb3);
         jp4.add(jb4);
         /*        jp5.add(jb5);*/
         /*        frame.add(jp5);*/
+        frame.add(jp5);
         frame.add(jp1);
         frame.add(jp2);
         frame.add(jp3);
@@ -66,7 +72,7 @@ public class Tio {
         jb2.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb3.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb4.setFont(new Font("微软雅黑", Font.BOLD, 12));
-
+        jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));
         /*        jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));*/
         //创建文本框
         JTextArea jtf = new JTextArea("\n游戏规则介绍:\n" +
@@ -276,9 +282,17 @@ public class Tio {
         jb4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "试玩版 - 21203" +
+                JOptionPane.showMessageDialog(frame, "试玩版 - 21204" +
                         "\n仅提供游戏体验，如有Bug修复速度会慢于正式版" +
                         "\n发布网站: github.com/setusb/Bomb");
+            }
+        });
+        jb5.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                frame.setVisible(false);
+                Login login = new Login();
+                login.logins();
             }
         });
     }

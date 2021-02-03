@@ -39,14 +39,23 @@ public class Register extends JDialog {
 
         register.addActionListener(actionEvent -> {
             UserImpl user = new UserImpl();
-            if (user.register(text.getText(), password.getText())) {
-                dispose();
-                Login l = new Login();
-                l.logins();
-            } else {
-                text.setText("该账户已存在");
+            if (text.getText().isEmpty() && password.getText().isEmpty()) {
+                text.setText("");
                 text.requestFocus();
                 password.setText("");
+            } else if (password.getText().isEmpty()) {
+                password.setText("");
+            } else {
+                if (user.register(text.getText(), password.getText())) {
+                    dispose();
+                    Login l = new Login();
+                    l.logins();
+                    JOptionPane.showMessageDialog(this, "注册成功");
+                } else {
+                    text.setText("该账户已存在");
+                    text.requestFocus();
+                    password.setText("");
+                }
             }
         });
         password.setEchoChar('*');
