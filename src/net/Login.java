@@ -6,6 +6,9 @@ import dao.UserImpl;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
 
 /**
  * @author setusb
@@ -14,6 +17,19 @@ import java.awt.*;
  */
 public class Login extends JDialog {
     private static final long serialVersionUID = 1L;
+    boolean tios = true;
+    {
+        InputStream in = Login.class.getClassLoader().getResourceAsStream("config.properties");
+        Properties prop = new Properties();
+        try {
+            prop.load(in);
+            String a1 = prop.getProperty("tio");
+            tios = Boolean.parseBoolean(a1);
+        } catch (IOException e) {
+            System.out.println("读取config.properties出现未知错误，请联系开发者！");
+        }
+    }
+
     public void logins(){
         String imagePath = "icon.png";
         Image imageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource(imagePath));
@@ -37,7 +53,9 @@ public class Login extends JDialog {
         con.add(text);
         con.add(label2);
         con.add(password);
-        con.add(button);
+        if (tios) {
+            con.add(button);
+        }
         con.add(jButton);
         con.add(register);
 /*        con.add(area);*/
@@ -52,7 +70,8 @@ public class Login extends JDialog {
                 Test test = new Test();
                 test.test(text.getText(), password.getText(),user.money(text.getText(), password.getText()));
             } else {
-                text.setText("账号错误");
+                JOptionPane.showMessageDialog(this, "账号或密码错误");
+                text.setText("");
                 text.requestFocus();
                 password.setText("");
             }
@@ -64,11 +83,22 @@ public class Login extends JDialog {
             reg.register();
         });
         text.addActionListener(arg0 -> {
-            // TODO Auto-generated method stub
-            text.setText("triggerEvent");
+            JOptionPane.showMessageDialog(this, "请输入密码");
+        });
+        password.addActionListener(arg0 -> {
+            UserImpl user = new UserImpl();
+            if (user.login(text.getText(), password.getText())) {
+                dispose();
+                Test test = new Test();
+                test.test(text.getText(), password.getText(),user.money(text.getText(), password.getText()));
+            } else {
+                JOptionPane.showMessageDialog(this, "账号或密码错误");
+                text.setText("");
+                text.requestFocus();
+                password.setText("");
+            }
         });
         button.addActionListener(e -> {
-            // TODO Auto-generated method stub
 /*            text.setText("");
             text.requestFocus();
             password.setText("");*/

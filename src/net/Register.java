@@ -43,8 +43,10 @@ public class Register extends JDialog {
                 text.setText("");
                 text.requestFocus();
                 password.setText("");
+                JOptionPane.showMessageDialog(this, "请输入账号");
             } else if (password.getText().isEmpty()) {
                 password.setText("");
+                JOptionPane.showMessageDialog(this, "请输入密码");
             } else {
                 if (user.register(text.getText(), password.getText())) {
                     dispose();
@@ -52,7 +54,8 @@ public class Register extends JDialog {
                     l.logins();
                     JOptionPane.showMessageDialog(this, "注册成功");
                 } else {
-                    text.setText("该账户已存在");
+                    JOptionPane.showMessageDialog(this, "该账户已存在");
+                    text.setText("");
                     text.requestFocus();
                     password.setText("");
                 }

@@ -327,6 +327,7 @@ public class Test {
                             money[0] += 1000;
                             flas = false;
                             database.modifyDatabase("update activationcode set verification = '1' where code = '" + a + "'");
+                            JOptionPane.showMessageDialog(frame, "兑换码："+a+"\n兑换成功");
                             break;
                         }
                     }
@@ -341,7 +342,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v21204 正式运行版" +
+                        "\n软件当前版本: v21223 正式运行版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
         });
