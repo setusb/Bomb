@@ -120,7 +120,7 @@ public class Test {
         frame.setLayout(new FlowLayout());
         frame.addWindowListener(new WindowAdapter() {
             //存储判断输入错误的数据
-            int math = 0;
+            final int math = 0;
 
             @Override
             public void windowClosing(WindowEvent e) {
@@ -342,7 +342,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v21223 正式运行版" +
+                        "\n软件当前版本: v210305 正式运行版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
         });

@@ -11,9 +11,9 @@ import java.sql.*;
  */
 public class DatabaseImpl implements DatabaseDao {
     static Jm jm = new Jm();
-    static String url = "jdbc:mysql://39.99.209.230:3306/bomb?useUnicode=true&characterEncoding=utf8";
-    static String username = "root";
-    static String password = jm.XORdecode("100617161001", "123456");
+    static String url = "jdbc:mysql://chengzhihao.mysql.rds.aliyuncs.com/bomb?useUnicode=true&characterEncoding=utf8";
+    static String username = "setusb";
+    static String password = jm.XORdecode("200251535352535753515753", "123456");
     static Connection conn = null;
     static ResultSet rs = null;
     static PreparedStatement ps = null;

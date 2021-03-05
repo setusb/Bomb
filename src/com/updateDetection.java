@@ -3,6 +3,10 @@ package com;
 import mysql.DatabaseImpl;
 import net.Stop;
 
+import javax.net.ssl.HttpsURLConnection;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -31,9 +35,6 @@ public class updateDetection {
         }
         database.closeDatabase();
 
-        System.out.println(version);
-        System.out.println(checked);
-
         if ("101".equals(checked)) {
             LoginMain loginMain = new LoginMain();
             loginMain.dl();
@@ -45,6 +46,22 @@ public class updateDetection {
 
         if (checked == null) {
             stop.stop();
+        }
+    }
+
+    /**
+     * 仅用于测试，废弃
+     * 2021.2.28
+     */
+    public void updateTest() {
+        try {
+            URL realUrl = new URL(null, "http://39.108.118.109:80", new sun.net.www.protocol.https.Handler());
+            HttpsURLConnection con = (HttpsURLConnection) realUrl.openConnection();
+            con.setRequestMethod("GET");
+            String ver = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
+            System.out.println(ver);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

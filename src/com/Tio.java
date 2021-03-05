@@ -282,7 +282,7 @@ public class Tio {
         jb4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "试玩版 - 21223" +
+                JOptionPane.showMessageDialog(frame, "试玩版 - 210305" +
                         "\n仅提供游戏体验，如有Bug修复速度会慢于正式版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
