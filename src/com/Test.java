@@ -2,6 +2,7 @@ package com;
 
 import dao.UserImpl;
 import mysql.DatabaseImpl;
+import net.Login;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,15 +10,17 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import static net.Lei.cf;
 import static net.Lei.csz;
 
 /**
@@ -53,6 +56,21 @@ public class Test {
         dh(money, shop, shopjb3);
         dh(money, shop, shopjb4);
         dh(money, shop, shopjb5);
+    }
+
+    boolean debug = true;
+
+    {
+        InputStream in = Login.class.getClassLoader().getResourceAsStream("config.properties");
+        Properties prop = new Properties();
+        try {
+            prop.load(in);
+            String a1 = prop.getProperty("tio");
+            String a2 = prop.getProperty("debug");
+            debug = Boolean.parseBoolean(a2);
+        } catch (IOException e) {
+            System.out.println("读取config.properties出现未知错误，请联系开发者！");
+        }
     }
 
     public void test(String name,String password,int moneys) {
@@ -100,7 +118,9 @@ public class Test {
         jb3.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb4.setFont(new Font("微软雅黑", Font.BOLD, 12));
 
-        System.out.println(name+password+moneys);
+        if (debug) {
+            System.out.println("用户："+name+"\n"+"密码："+password+"\n"+"金钱："+moneys);
+        }
 
 /*        jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));*/
         //创建文本框
@@ -129,9 +149,13 @@ public class Test {
                     UserImpl user = new UserImpl();
                     /*System.out.println("返回值: "+user.moneyModify(name, password, money[0]));*/
                     if (user.moneyModify(name, password, money[0]) > 0) {
-                        System.out.println("已提交信息！");
+                        if (debug) {
+                            System.out.println("Debug - 已提交信息");
+                        }
                     } else {
-                        System.out.println("提交信息失败，重新提交！");
+                        if (debug) {
+                            System.out.println("Debug - 提交信息失败");
+                        }
                         JOptionPane.showMessageDialog(frame,"金钱提交服务器失败，请截此窗口联系开发者!\n用户: "+name+"\t金钱: "+money[0] );
                     }
                     System.exit(0);
@@ -171,10 +195,17 @@ public class Test {
                             if ("".equals(answer)) {
                                 JOptionPane.showMessageDialog(jf1, "你并没有输入任何值");
                             } else {
-                                int[] arr = csz(answer, fw);
-                                fw = arr[0];
-                                fws = arr[1];
-                                money[0] += arr[2];
+                                int[] arr = new int[0];
+                                try {
+                                    arr = csz(answer, fw);
+                                    fw = arr[0];
+                                    fws = arr[1];
+                                    money[0] += arr[2];
+                                } catch (Exception exception) {
+                                    if (debug) {
+                                        System.out.println("Debug - 关闭猜数字框");
+                                    }
+                                }
                                 if (fws != 0) {
                                     jtf1.append(fws + "   ");
                                     a++;
@@ -287,7 +318,6 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int opesn = JOptionPane.showConfirmDialog(shop, "需要金币: 500\n兑换后只能查看一次，关闭后需重新兑换");
-                System.out.println(money[0]);
                 if (JOptionPane.OK_OPTION == opesn) {
                     if (money[0] >= 500) {
                         money[0] -= 500;
@@ -315,24 +345,32 @@ public class Test {
                 } catch (SQLException a) {
                     System.out.println("出错");
                 }
-                System.out.println(code.isEmpty());
+                if (debug) {
+                    System.out.println("DeBug - 打开了特权码");
+                }
                 if (code.isEmpty()) {
                     JOptionPane.showMessageDialog(frame, "客户端无法访问特权码\n此功能已被禁用");
                 } else {
-                    boolean flas = true;
-                    String sz = JOptionPane.showInputDialog(frame, "请输入特权码\n(使用特权码可以迅速获得大量金币)\n(购买特权码请联系软件发布者)");
-                    for (String a : code)
-                    {
-                        if (sz.equals(a)) {
-                            money[0] += 1000;
-                            flas = false;
-                            database.modifyDatabase("update activationcode set verification = '1' where code = '" + a + "'");
-                            JOptionPane.showMessageDialog(frame, "兑换码："+a+"\n兑换成功");
-                            break;
+                    try {
+                        boolean flas = true;
+                        String sz = JOptionPane.showInputDialog(frame, "请输入特权码\n(使用特权码可以迅速获得大量金币)\n(购买特权码请联系软件发布者)");
+                        for (String a : code)
+                        {
+                            if (sz.equals(a)) {
+                                money[0] += 1000;
+                                flas = false;
+                                database.modifyDatabase("update activationcode set verification = '1' where code = '" + a + "'");
+                                JOptionPane.showMessageDialog(frame, "兑换码："+a+"\n兑换成功");
+                                break;
+                            }
                         }
-                    }
-                    if (flas) {
-                        JOptionPane.showMessageDialog(frame, "你输入的特权码不对");
+                        if (flas) {
+                            JOptionPane.showMessageDialog(frame, "你输入的特权码不对");
+                        }
+                    } catch (Exception exception) {
+                        if (debug) {
+                            System.out.println("DeBug - 关闭了特权码");
+                        }
                     }
                 }
                 database.closeDatabase();
@@ -342,7 +380,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v210305 正式运行版" +
+                        "\n软件当前版本: v210310 正式运行版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
         });

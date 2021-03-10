@@ -159,7 +159,12 @@ public class Tio {
                             if ("".equals(answer)) {
                                 JOptionPane.showMessageDialog(jf1, "你并没有输入任何值");
                             } else {
-                                int[] arr = csz(answer, fw);
+                                int[] arr = new int[0];
+                                try {
+                                    arr = csz(answer, fw);
+                                } catch (Exception exception) {
+                                    System.out.println("yc");
+                                }
                                 fw = arr[0];
                                 fws = arr[1];
                                 money[0] += arr[2];
@@ -282,7 +287,7 @@ public class Tio {
         jb4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "试玩版 - 210305" +
+                JOptionPane.showMessageDialog(frame, "试玩版 - 210310" +
                         "\n仅提供游戏体验，如有Bug修复速度会慢于正式版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }

@@ -1,6 +1,5 @@
 package dao;
 
-import mysql.DatabaseDao;
 import mysql.DatabaseImpl;
 import mysql.User;
 

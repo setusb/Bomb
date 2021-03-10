@@ -24,6 +24,7 @@ public class Login extends JDialog {
         try {
             prop.load(in);
             String a1 = prop.getProperty("tio");
+            String a2 = prop.getProperty("debug");
             tios = Boolean.parseBoolean(a1);
         } catch (IOException e) {
             System.out.println("读取config.properties出现未知错误，请联系开发者！");
