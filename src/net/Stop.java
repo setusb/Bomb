@@ -20,7 +20,7 @@ public class Stop {
         ses(frame, jtf);
     }
 
-    private void ses(Frame frame, JTextArea jtf) {
+    public void ses(Frame frame, JTextArea jtf) {
         frame.setLocationRelativeTo(null);
         frame.add(jtf);
         jtf.setEditable(false);

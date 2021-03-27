@@ -86,8 +86,14 @@ public class Test {
          * */
         String imagePath = "icon.png";
         Image imageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource(imagePath));
+        Image imageIcons = Toolkit.getDefaultToolkit().getImage(imagePath);
         frame.setIconImage(imageIcon);
         frame.setVisible(true);
+        /**
+         * 无法修复商店和游戏界面的图标显示问题，历史遗留bug
+         * */
+/*        jf1.setIconImage(imageIcons);
+        shop.setIconImage(imageIcons);*/
 
         //设置窗口大小和位置
         frame.setSize(525, 235);
@@ -380,7 +386,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v210310 正式运行版" +
+                        "\n软件当前版本: v210327 正式运行版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
         });

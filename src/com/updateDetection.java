@@ -1,9 +1,11 @@
 package com;
 
 import mysql.DatabaseImpl;
+import net.Load;
 import net.Stop;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -16,9 +18,12 @@ import java.sql.SQLException;
  * @date 2021/1/23 19:15
  */
 public class updateDetection {
+    Load load = new Load();
+    Frame frame_load = load.loadGui();
+
     public void update() {
         //版本号 - 必须和服务器version保持一致
-        String version = "210310";
+        String version = "210327";
         //校验码 - 101是正常 404是停止运营
         String checked = null;
         String deactivate = "404";
@@ -34,17 +39,19 @@ public class updateDetection {
             System.out.println("出错");
         }
         database.closeDatabase();
-
         if ("101".equals(checked)) {
             LoginMain loginMain = new LoginMain();
+            frame_load.dispose();
             loginMain.dl();
         }
 
         if (deactivate.equals(checked)) {
+            frame_load.dispose();
             stop.stop();
         }
 
         if (checked == null) {
+            frame_load.dispose();
             stop.stop();
         }
     }
