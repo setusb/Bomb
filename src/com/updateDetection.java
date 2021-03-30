@@ -56,20 +56,4 @@ public class updateDetection {
             stop.stop(frameLoad);
         }
     }
-
-    /**
-     * 仅用于测试，废弃
-     * 2021.2.28
-     */
-    public void updateTest() {
-        try {
-            URL realUrl = new URL(null, "http://39.108.118.109:80", new sun.net.www.protocol.https.Handler());
-            HttpsURLConnection con = (HttpsURLConnection) realUrl.openConnection();
-            con.setRequestMethod("GET");
-            String ver = new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-            System.out.println(ver);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 }
