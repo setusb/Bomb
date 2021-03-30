@@ -386,7 +386,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v210327 正式运行版" +
+                        "\n软件当前版本: v210330 正式运行版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
         });
