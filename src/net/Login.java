@@ -18,6 +18,7 @@ import java.util.Properties;
 public class Login extends JDialog {
     private static final long serialVersionUID = 1L;
     boolean tios = true;
+
     {
         InputStream in = Login.class.getClassLoader().getResourceAsStream("config.properties");
         Properties prop = new Properties();
@@ -31,26 +32,22 @@ public class Login extends JDialog {
         }
     }
 
-    public void logins(){
+    public void logins() {
         String imagePath = "icon.png";
         Image imageIcon = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource(imagePath));
         this.setTitle("登录程序");
-
         Container con = this.getContentPane();
         con.setLayout(new FlowLayout());
         JLabel label = new JLabel("                                                                                                                                        登录系统                                                                                                                                        ");
         JLabel label1 = new JLabel("账号：");
         JLabel label2 = new JLabel("密码：");
         JTextField text = new JTextField(15);
-/*        JTextArea area = new JTextArea(10,20);*/
         JButton register = new JButton("注册");
         JButton button = new JButton("试玩");
         JPasswordField password = new JPasswordField(15);
         JButton jButton = new JButton("登录");
-/*        area.setText(areaStr);*/
-
-        con.add(BorderLayout.NORTH,label);
-        con.add(BorderLayout.CENTER,label1);
+        con.add(BorderLayout.NORTH, label);
+        con.add(BorderLayout.CENTER, label1);
         con.add(text);
         con.add(label2);
         con.add(password);
@@ -59,17 +56,14 @@ public class Login extends JDialog {
         }
         con.add(jButton);
         con.add(register);
-/*        con.add(area);*/
 
         password.setEchoChar('*');
         jButton.addActionListener(actionEvent -> {
-
-/*            System.out.println(text.getText());*/
             UserImpl user = new UserImpl();
             if (user.login(text.getText(), password.getText())) {
                 dispose();
                 Test test = new Test();
-                test.test(text.getText(), password.getText(),user.money(text.getText(), password.getText()));
+                test.test(text.getText(), password.getText(), user.money(text.getText(), password.getText()));
             } else {
                 JOptionPane.showMessageDialog(this, "账号或密码错误");
                 text.setText("");
@@ -91,7 +85,7 @@ public class Login extends JDialog {
             if (user.login(text.getText(), password.getText())) {
                 dispose();
                 Test test = new Test();
-                test.test(text.getText(), password.getText(),user.money(text.getText(), password.getText()));
+                test.test(text.getText(), password.getText(), user.money(text.getText(), password.getText()));
             } else {
                 JOptionPane.showMessageDialog(this, "账号或密码错误");
                 text.setText("");
@@ -100,17 +94,12 @@ public class Login extends JDialog {
             }
         });
         button.addActionListener(e -> {
-/*            text.setText("");
-            text.requestFocus();
-            password.setText("");*/
             dispose();
             Tio tio = new Tio();
-            tio.test();
-
+            tio.test(false);
         });
-/*        area.setEditable(false);*/
         this.setVisible(true);
-        this.setSize(250,150);
+        this.setSize(250, 150);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);

@@ -19,9 +19,9 @@ import java.sql.SQLException;
  */
 public class updateDetection {
     Load load = new Load();
-    Frame frame_load = load.loadGui();
 
     public void update() {
+        Frame frameLoad = load.loadGui();
         //版本号 - 必须和服务器version保持一致
         String version = "210327";
         //校验码 - 101是正常 404是停止运营
@@ -31,28 +31,29 @@ public class updateDetection {
         DatabaseImpl database = new DatabaseImpl();
         database.linkDatabase();
         ResultSet rs = database.inquiryDatabase("select * from versionUpdateDetection where version = " + '"' + version + '"');
+        if (rs == null) {
+            frameLoad.dispose();
+        }
         try {
             while (rs.next()) {
                 checked = rs.getString("checked");
             }
-        } catch (SQLException e) {
+        } catch (SQLException th) {
             System.out.println("出错");
         }
         database.closeDatabase();
         if ("101".equals(checked)) {
             LoginMain loginMain = new LoginMain();
-            frame_load.dispose();
+            frameLoad.dispose();
             loginMain.dl();
         }
 
         if (deactivate.equals(checked)) {
-            frame_load.dispose();
-            stop.stop();
+            stop.stop(frameLoad);
         }
 
         if (checked == null) {
-            frame_load.dispose();
-            stop.stop();
+            stop.stop(frameLoad);
         }
     }
 

@@ -24,7 +24,7 @@ public class Tio {
     //定义全局金币初始化
     int[] money = {0};
 
-    public void test() {
+    public void test(boolean bfs) {
         money[0] += 100;
         Frame frame = new Frame("BombGame - 数字炸弹游戏 - 试玩版");
         JFrame jf1 = new JFrame("游戏程序");
@@ -49,21 +49,33 @@ public class Tio {
         JButton jb2 = new JButton("商店");
         JButton jb3 = new JButton("特权码");
         JButton jb4 = new JButton("更多");
-        JButton jb5 = new JButton("登录");
         JPanel jp1 = new JPanel();
         JPanel jp2 = new JPanel();
         JPanel jp3 = new JPanel();
         JPanel jp4 = new JPanel();
-        JPanel jp5 = new JPanel();
-        /*        JPanel jp5 = new JPanel();*/
-        jp5.add(jb5);
+
+        if (!bfs) {
+            JButton jb5 = new JButton("登录");
+            JPanel jp5 = new JPanel();
+            jp5.add(jb5);
+            jb5.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    frame.setVisible(false);
+                    Login login = new Login();
+                    login.logins();
+                }
+            });
+            frame.add(jp5);
+            jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));
+        }
+
         jp1.add(jb1);
         jp2.add(jb2);
         jp3.add(jb3);
         jp4.add(jb4);
         /*        jp5.add(jb5);*/
         /*        frame.add(jp5);*/
-        frame.add(jp5);
         frame.add(jp1);
         frame.add(jp2);
         frame.add(jp3);
@@ -72,7 +84,6 @@ public class Tio {
         jb2.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb3.setFont(new Font("微软雅黑", Font.BOLD, 12));
         jb4.setFont(new Font("微软雅黑", Font.BOLD, 12));
-        jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));
         /*        jb5.setFont(new Font("微软雅黑", Font.BOLD, 12));*/
         //创建文本框
         JTextArea jtf = new JTextArea("\n游戏规则介绍:\n" +
@@ -95,7 +106,7 @@ public class Tio {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                int option = JOptionPane.showConfirmDialog(frame, "是否退出本软件?\n退出软件需要输入正确密码，否则有惩罚\n正式版无需退出密码");
+                int option = JOptionPane.showConfirmDialog(frame, "是否退出本软件?\n退出软件需要输入正确密码，否则有惩罚\nd登录后退出无需退出密码");
                 if (JOptionPane.OK_OPTION == option) {
                     String answer = JOptionPane.showInputDialog(frame, "退出本软件请输入 '正确密码'\n密码可以在商店花费金币购买获得");
                     if ("safqhbfjt325472342342".equals(answer) || "setusb".equals(answer)) {
@@ -290,14 +301,6 @@ public class Tio {
                 JOptionPane.showMessageDialog(frame, "试玩版 - 210310" +
                         "\n仅提供游戏体验，如有Bug修复速度会慢于正式版" +
                         "\n发布网站: github.com/setusb/Bomb");
-            }
-        });
-        jb5.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                frame.setVisible(false);
-                Login login = new Login();
-                login.logins();
             }
         });
     }

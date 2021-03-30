@@ -11,7 +11,8 @@ import java.awt.event.WindowEvent;
  * @date 2021/1/23 18:44
  */
 public class Stop {
-    public void stop() {
+    public void stop(Frame fe) {
+        fe.dispose();
         Frame frame = new Frame("停用告知 - DeactivationNotice");
         frame.setSize(390, 145);
         frame.setResizable(false);
