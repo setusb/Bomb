@@ -31,7 +31,7 @@ import static net.Lei.csz;
 public class Test {
     //定义全局金币初始化
     int[] money = {0};
-    private static void dh(int[] money, JFrame shop, JButton shopjb11) {
+    private static void dh(int[] money, Frame shop, JButton shopjb11) {
         shopjb11.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -50,7 +50,7 @@ public class Test {
         });
     }
 
-    public static void naihuan(int[] money, JFrame shop, JButton shopjb1, JButton shopjb2, JButton shopjb3, JButton shopjb4, JButton shopjb5) {
+    public static void naihuan(int[] money, Frame shop, JButton shopjb1, JButton shopjb2, JButton shopjb3, JButton shopjb4, JButton shopjb5) {
         dh(money, shop, shopjb1);
         dh(money, shop, shopjb2);
         dh(money, shop, shopjb3);
@@ -76,8 +76,11 @@ public class Test {
     public void test(String name,String password,int moneys) {
         money[0] += moneys;
         Frame frame = new Frame("BombGame - 数字炸弹游戏");
-        JFrame jf1 = new JFrame("游戏程序");
-        JFrame shop = new JFrame("游戏商店");
+        JFrame jf0 = new JFrame("游戏程序");
+        JFrame shoT = new JFrame("游戏商店");
+        Frame jf1=(Frame)jf0;
+        Frame shop=(Frame)shoT;
+
         //设置窗口图标
         /*frame.setIconImage(new ImageIcon("com/icon.png").getImage());*/
         /*
@@ -89,6 +92,10 @@ public class Test {
         Image imageIcons = Toolkit.getDefaultToolkit().getImage(imagePath);
         frame.setIconImage(imageIcon);
         frame.setVisible(true);
+        jf1.setIconImage(imageIcon);
+        jf1.setVisible(false);
+        shop.setIconImage(imageIcon);
+        shop.setVisible(false);
         /**
          * 无法修复商店和游戏界面的图标显示问题，历史遗留bug
          * */
@@ -172,6 +179,7 @@ public class Test {
         jtf1.setVisible(true);
         jtf1.setEditable(false);
         jf1.add(jtf1);
+
         Font font = jtf1.getFont();
         jtf1.setFont(new Font(font.getName(), font.getStyle(), 20));
         jtf1.setBackground(new Color(238, 238, 238));
