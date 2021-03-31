@@ -80,11 +80,7 @@ public class Lei {
     }
     //惩罚程序
     public static void cf(){
-        while (true) {
-            JFrame jFrame = new JFrame("惩罚程序");
-            jFrame.setVisible(true);
-            jFrame.setSize(0, 0);
-            jFrame.setLocation(10000,10000);
-        }
+        Run run = new Run();
+        run.mains();
     }
 }

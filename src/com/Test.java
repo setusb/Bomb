@@ -186,51 +186,24 @@ public class Test {
         JPanel jp1_1 = new JPanel();
         JButton jb1_1 = new JButton("请点击");
         jb1_1.setLocation(10, 10);
+
+        final boolean[] open = {true};
+        //定义数值范围
+        final int[] fw = {100};
+        final int[] fws = {0};
+        final int[] a = {0};
+
         jb1.addMouseListener(new MouseAdapter() {
-            boolean open = true;
-            //定义数值范围
-            int fw = 100;
-            int fws = 0;
-            int a = 0;
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (open) {
+                if (open[0]) {
                     jf1.setVisible(true);
                     jf1.setSize(624, 275);
                     jf1.setLocationRelativeTo(null);
                     jf1.setResizable(false);
                     Dimension preferredSize = new Dimension(300, 100);
                     jb1_1.setPreferredSize(preferredSize);
-                    jb1_1.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            String answer = JOptionPane.showInputDialog(jf1, "请输入你想猜的数字\n当前范围(小于)" + fw + "\n每一次错误，值都会减20");
-                            if ("".equals(answer)) {
-                                JOptionPane.showMessageDialog(jf1, "你并没有输入任何值");
-                            } else {
-                                int[] arr = new int[0];
-                                try {
-                                    arr = csz(answer, fw);
-                                    fw = arr[0];
-                                    fws = arr[1];
-                                    money[0] += arr[2];
-                                } catch (Exception exception) {
-                                    if (debug) {
-                                        System.out.println("Debug - 关闭猜数字框");
-                                    }
-                                }
-                                if (fws != 0) {
-                                    jtf1.append(fws + "   ");
-                                    a++;
-                                    if (a == 12) {
-                                        jtf1.append("\n");
-                                        a = 0;
-                                    }
-                                }
-                            }
-                        }
-                    });
                     jf1.add(jp1_1);
                     jp1_1.add(jb1_1);
                     jb1_1.setPreferredSize(new Dimension(133, 33));
@@ -239,14 +212,43 @@ public class Test {
                             Toolkit.getDefaultToolkit().getImage("icon.png")
                     );
                 }
-                open = false;
+                open[0] = false;
                 jf1.setLayout(new FlowLayout());
-                jf1.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        open = true;
+            }
+        });
+        jf1.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                open[0] = true;
+            }
+        });
+        jb1_1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String answer = JOptionPane.showInputDialog(jf1, "请输入你想猜的数字\n当前范围(小于)" + fw[0] + "\n每一次错误，值都会减20");
+                if ("".equals(answer)) {
+                    JOptionPane.showMessageDialog(jf1, "你并没有输入任何值");
+                } else {
+                    int[] arr = new int[0];
+                    try {
+                        arr = csz(answer, fw[0]);
+                        fw[0] = arr[0];
+                        fws[0] = arr[1];
+                        money[0] += arr[2];
+                    } catch (Exception exception) {
+                        if (debug) {
+                            System.out.println("Debug - 关闭猜数字框");
+                        }
                     }
-                });
+                    if (fws[0] != 0) {
+                        jtf1.append(fws[0] + "   ");
+                        a[0]++;
+                        if (a[0] == 12) {
+                            jtf1.append("\n");
+                            a[0] = 0;
+                        }
+                    }
+                }
             }
         });
         JPanel shopjp1 = new JPanel();
@@ -394,7 +396,7 @@ public class Test {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JOptionPane.showMessageDialog(frame, "软件制作人: 吊毛猫" +
-                        "\n软件当前版本: v210330 正式运行版" +
+                        "\n软件当前版本: v210331 正式运行版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
         });

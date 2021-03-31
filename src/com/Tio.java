@@ -106,7 +106,7 @@ public class Tio {
 
             @Override
             public void windowClosing(WindowEvent e) {
-                int option = JOptionPane.showConfirmDialog(frame, "是否退出本软件?\n退出软件需要输入正确密码，否则有惩罚\nd登录后退出无需退出密码");
+                int option = JOptionPane.showConfirmDialog(frame, "是否退出本软件?\n退出软件需要输入正确密码，否则有惩罚\n登录后退出无需退出密码");
                 if (JOptionPane.OK_OPTION == option) {
                     String answer = JOptionPane.showInputDialog(frame, "退出本软件请输入 '正确密码'\n密码可以在商店花费金币购买获得");
                     if ("safqhbfjt325472342342".equals(answer) || "setusb".equals(answer)) {
@@ -147,49 +147,23 @@ public class Tio {
         JPanel jp1_1 = new JPanel();
         JButton jb1_1 = new JButton("请点击");
         jb1_1.setLocation(10, 10);
-        jb1.addMouseListener(new MouseAdapter() {
-            boolean open = true;
-            //定义数值范围
-            int fw = 100;
-            int fws = 0;
-            int a = 0;
+        final boolean[] open = {true};
 
+        //定义数值范围
+        final int[] fw = {100};
+        final int[] fws = {0};
+        final int[] a = {0};
+
+        jb1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if (open) {
+                if (open[0]) {
                     jf1.setVisible(true);
                     jf1.setSize(624, 275);
                     jf1.setLocationRelativeTo(null);
                     jf1.setResizable(false);
                     Dimension preferredSize = new Dimension(300, 100);
                     jb1_1.setPreferredSize(preferredSize);
-                    jb1_1.addMouseListener(new MouseAdapter() {
-                        @Override
-                        public void mouseClicked(MouseEvent e) {
-                            String answer = JOptionPane.showInputDialog(jf1, "请输入你想猜的数字\n当前范围(小于)" + fw + "\n每一次错误，值都会减20");
-                            if ("".equals(answer)) {
-                                JOptionPane.showMessageDialog(jf1, "你并没有输入任何值");
-                            } else {
-                                int[] arr = new int[0];
-                                try {
-                                    arr = csz(answer, fw);
-                                } catch (Exception exception) {
-                                    System.out.println("yc");
-                                }
-                                fw = arr[0];
-                                fws = arr[1];
-                                money[0] += arr[2];
-                                if (fws != 0) {
-                                    jtf1.append(fws + "   ");
-                                    a++;
-                                    if (a == 12) {
-                                        jtf1.append("\n");
-                                        a = 0;
-                                    }
-                                }
-                            }
-                        }
-                    });
                     jf1.add(jp1_1);
                     jp1_1.add(jb1_1);
                     jb1_1.setPreferredSize(new Dimension(133, 33));
@@ -198,14 +172,41 @@ public class Tio {
                             Toolkit.getDefaultToolkit().getImage("icon.png")
                     );
                 }
-                open = false;
+                open[0] = false;
                 jf1.setLayout(new FlowLayout());
-                jf1.addWindowListener(new WindowAdapter() {
-                    @Override
-                    public void windowClosing(WindowEvent e) {
-                        open = true;
+            }
+        });
+        jb1_1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String answer = JOptionPane.showInputDialog(jf1, "请输入你想猜的数字\n当前范围(小于)" + fw[0] + "\n每一次错误，值都会减20");
+                if ("".equals(answer)) {
+                    JOptionPane.showMessageDialog(jf1, "你并没有输入任何值");
+                } else {
+                    int[] arr = new int[0];
+                    try {
+                        arr = csz(answer, fw[0]);
+                    } catch (Exception exception) {
+                        System.out.println("yc");
                     }
-                });
+                    fw[0] = arr[0];
+                    fws[0] = arr[1];
+                    money[0] += arr[2];
+                    if (fws[0] != 0) {
+                        jtf1.append(fws[0] + "   ");
+                        a[0]++;
+                        if (a[0] == 12) {
+                            jtf1.append("\n");
+                            a[0] = 0;
+                        }
+                    }
+                }
+            }
+        });
+        jf1.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                open[0] = true;
             }
         });
         JPanel shopjp1 = new JPanel();
@@ -298,7 +299,7 @@ public class Tio {
         jb4.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                JOptionPane.showMessageDialog(frame, "试玩版 - 210310" +
+                JOptionPane.showMessageDialog(frame, "试玩版 - 210331" +
                         "\n仅提供游戏体验，如有Bug修复速度会慢于正式版" +
                         "\n发布网站: github.com/setusb/Bomb");
             }
